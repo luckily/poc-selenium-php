@@ -2,7 +2,7 @@
 
 require './vendor/autoload.php';
 
-class WebTest extends PHPUnit_Extensions_Selenium2TestCase
+class GitHubTest extends PHPUnit_Extensions_Selenium2TestCase
 {
 
     public static function browsers()
