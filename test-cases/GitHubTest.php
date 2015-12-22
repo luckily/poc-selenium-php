@@ -1,45 +1,48 @@
 <?php
 
-require './vendor/autoload.php';
+require_once 'phar://' . dirname(__FILE__) . '/../phpunit_facebook_webdriver.phar/autoload.php';
 
-class GitHubTest extends PHPUnit_Extensions_Selenium2TestCase
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\WebDriverBy;
+
+class GitHubTest extends PHPUnit_Framework_TestCase
 {
 
-    public static function browsers()
-    {
-        return array(
-            // array(
-            //      'host' => '127.0.0.1',
-            //      'port' => 4444,
-            //      'browser' => 'firefox test browser',
-            //      'browserName' => 'firefox',
-            // ),
-            array(
-                 'host' => '127.0.0.1',
-                 'port' => 4444,
-                 'browser' => 'chrome test browser',
-                 'browserName' => 'chrome',
-            ),
-        );
-    }
+    /**
+     * @var Facebook\WebDriver\Remote\RemoteWebDriver
+     */
+    protected $webDriver;
+    protected $url = 'https://github.com/';
 
     protected function setUp()
     {
-        $this->setBrowserUrl('http://www.104.com.tw/');
+        $host = 'http://localhost:4444/wd/hub';
+        $browser = DesiredCapabilities::chrome();
+        $this->webDriver = RemoteWebDriver::create($host, $browser);
     }
 
-
-    public function setUpPage()
+    protected function tearDown()
     {
-        $this->url('/');
+        $this->webDriver->close();
     }
 
-    public function testTitle()
+    public function testSearch()
     {
-        $element = $this->byCssSelector('.logo');
-        var_dump($element->attribute('title'));
-        $this->assertEquals($element->attribute('title'), '104人力銀行 - 不只找工作為你找方向');
-        sleep(10);
+        $this->webDriver->get($this->url);
+        $form = $this->webDriver->findElement(WebDriverBy::cssSelector('form.js-site-search-form'));
+        $input = $form->findElement(WebDriverBy::cssSelector('input[type=text].js-site-search-focus'));
+        $input->sendKeys('yii 1.1');
+        $form->submit();
+
+        $link = $this->webDriver->findElement(WebDriverBy::cssSelector('ul.repo-list li.repo-list-item h3.repo-list-name a'));
+        $link->click();
+
+        $repositoryMeta = $this->webDriver->findElement(WebDriverBy::cssSelector('span.repository-meta-content'))->getText();
+
+        sleep(3);
+
+        $this->assertContains('Yii PHP Framework 1.1', $repositoryMeta);
     }
 }
 
