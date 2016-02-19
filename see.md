@@ -31,10 +31,12 @@
  */
 
 啟動selenium
-``` for mac
-java -Dwebdriver.chrome.driver=./bwoser-drive/chromedriver -jar selenium-server-standalone-2.39.0.jar
 ```
-``` for windows
-java -Dwebdriver.chrome.driver=C:\xampp\htdocs\selenium\chromedriver.exe -jar selenium-server-standalone-2.39.0.jar
+# for mac
+$ java -Dwebdriver.chrome.driver=./bwoser-drive/chromedriver -jar selenium-server-standalone-2.39.0.jar
+```
+```
+# for windows
+$ java -Dwebdriver.chrome.driver=C:\xampp\htdocs\selenium\chromedriver.exe -jar selenium-server-standalone-2.39.0.jar
 ```
  
