@@ -26,10 +26,15 @@
  * 
  * 透過pear安裝phpunit
  * @see http://stackoverflow.com/questions/12655136/install-phpunit-on-windows
- * java -Dwebdriver.chrome.driver=C:\xampp\htdocs\selenium\chromedriver.exe -jar selenium-server-standalone-2.39.0.jar
  * phpunit --configuration phpunit.xml tests/EventTest
  * http://localhost:8080/selenium/test.php
  */
- 
- 
+
+啟動selenium
+``` for mac
+java -Dwebdriver.chrome.driver=./bwoser-drive/chromedriver -jar selenium-server-standalone-2.39.0.jar
+```
+``` for windows
+java -Dwebdriver.chrome.driver=C:\xampp\htdocs\selenium\chromedriver.exe -jar selenium-server-standalone-2.39.0.jar
+```
  
